@@ -42,17 +42,17 @@ pipeline {
 		}
 		stage("Docker build") {
 		        steps {
-		            sh "docker build -t 172.17.0.2:5000/calculator ."
+		            sh "docker build -t 172.17.0.1:5000/calculator ."
 		        }
 		}
                 stage('Docker push') {
                         steps {
-                            sh "docker push 172.17.0.2:5000/calculator"
+                            sh "docker push 172.17.0.1:5000/calculator"
                         }
                 }
         	stage("Deploy to staging") {
             		steps {
-                		sh "docker run -d --rm -p 8765:8080 --name calculator 172.17.0.2:5000/calculator"
+                		sh "docker run -d --rm -p 8765:8080 --name calculator 172.17.0.1:5000/calculator"
             		}                
         	}
 		stage("Acceptance test") {
