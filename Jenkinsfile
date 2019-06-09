@@ -56,11 +56,15 @@ pipeline {
             		}                
         	}
 		stage("Acceptance test") {
-			steps {
-				sleep 60
-				sh "./acceptance_test.sh"
-			}
-		}
+       			steps {
+			   sh "docker-compose -f docker-compose.yml 
+				-f acceptance/docker-compose-acceptance.yml build test"
+			   sh "docker-compose -f docker-compose.yml
+           			-f acceptance/docker-compose-acceptance.yml
+           			-p acceptance up -d"
+			   sh 'test $(docker wait acceptance_test_1) -eq 0'
+		        }
+                }
         }
 	post {
 		always {
