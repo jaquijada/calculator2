@@ -1,7 +1,14 @@
 pipeline {
+	/*
 	agent any
 	triggers {
 		pollSCM('* * * * *')
+	}
+	*/
+    	agent {
+        	docker {
+			image 'localhost:5000/jenkins-ssh-slave'
+		}
 	}
         stages {
 		stage("Compile") {
